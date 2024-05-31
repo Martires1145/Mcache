@@ -1,8 +1,10 @@
 package Mcache
 
 import (
+	"Mcache/singleflight"
 	"fmt"
 	"log"
+	"sync"
 	"testing"
 )
 
@@ -38,5 +40,29 @@ func TestClient_Get(t *testing.T) {
 
 	if view, err := gee.Get("unknown"); err == nil {
 		t.Fatalf("the value of unknow should be empty, but %s got", view)
+	}
+}
+
+func TestSingleFlight(t *testing.T) {
+	sg := &singleflight.Group{}
+	cnt, all := 0, 1000
+	wg1, wg2 := sync.WaitGroup{}, sync.WaitGroup{}
+	wg1.Add(all)
+	wg2.Add(all)
+	for i := 0; i < all; i++ {
+		go func() {
+			wg1.Wait()
+			sg.Do("key", func() (any, error) {
+				cnt++
+				return nil, nil
+			})
+			wg2.Done()
+		}()
+		wg1.Done()
+	}
+	wg2.Wait()
+
+	if cnt != 1 {
+		t.Fatalf("failed")
 	}
 }

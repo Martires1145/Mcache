@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c800cad-7ffc-4a41-962b-09b9f99b3685" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/singleflight/singleflight.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/client_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +48,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Go 测试.Mcache 中的 TestClient_Get">
+  <component name="RunManager" selected="Go 测试.Mcache 中的 TestSingleFlight">
     <configuration name="Mcache 中的 TestClient_Get" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="Mcache" />
       <working_directory value="$PROJECT_DIR$" />
@@ -58,6 +58,17 @@
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
       <pattern value="^\QTestClient_Get\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Mcache 中的 TestSingleFlight" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="Mcache" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="Mcache" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestSingleFlight\E$" />
       <method v="2" />
     </configuration>
     <configuration name="Mcache/lru 中的 TestCacheAddAndGet" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -98,6 +109,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go 测试.Mcache 中的 TestSingleFlight" />
         <item itemvalue="Go 测试.Mcache 中的 TestClient_Get" />
         <item itemvalue="Go 测试.Mcache/lru 中的 TestOnEvicted" />
         <item itemvalue="Go 测试.Mcache/lru 中的 TestRemoveOldest" />
