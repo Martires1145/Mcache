@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c800cad-7ffc-4a41-962b-09b9f99b3685" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Mcache.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/byteview.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/singleflight/singleflight.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
