@@ -1,8 +1,8 @@
 package Mcache
 
 import (
-	"Mcache/singleflight"
 	"fmt"
+	"github.com/Martires1145/Mcache/singleflight"
 	"log"
 )
 

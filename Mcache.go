@@ -1,7 +1,7 @@
 package Mcache
 
 import (
-	"Mcache/lru"
+	"github.com/Martires1145/Mcache/lru"
 	"sync"
 )
 
