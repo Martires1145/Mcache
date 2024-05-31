@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c800cad-7ffc-4a41-962b-09b9f99b3685" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/lru/lru.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lru/lru_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +48,38 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager" selected="Go 测试.Mcache/lru 中的 TestRemoveOldest">
+    <configuration name="Mcache/lru 中的 TestCacheAddAndGet" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="Mcache" />
+      <working_directory value="$PROJECT_DIR$/lru" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="Mcache/lru" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestCacheAddAndGet\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Mcache/lru 中的 TestRemoveOldest" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="Mcache" />
+      <working_directory value="$PROJECT_DIR$/lru" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="Mcache/lru" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestRemoveOldest\E$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go 测试.Mcache/lru 中的 TestRemoveOldest" />
+        <item itemvalue="Go 测试.Mcache/lru 中的 TestCacheAddAndGet" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
