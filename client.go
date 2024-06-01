@@ -20,6 +20,7 @@ type Client struct {
 	getter    Getter
 	mainCache cache
 	loader    *singleflight.Group
+	uMap      map[string]any
 }
 
 func New(maxBytes int64, getter Getter) *Client {
@@ -27,6 +28,7 @@ func New(maxBytes int64, getter Getter) *Client {
 		getter:    getter,
 		mainCache: cache{cacheBytes: maxBytes},
 		loader:    &singleflight.Group{},
+		uMap:      make(map[string]any),
 	}
 }
 
@@ -36,6 +38,10 @@ func (c *Client) Get(key string) (ByteView, error) {
 	}
 
 	value, err := c.loader.Do(key, func() (any, error) {
+		if _, ok := c.uMap[key]; ok {
+			delete(c.uMap, key)
+			return c.getFromGetter(key)
+		}
 		if value, ok := c.mainCache.get(key); ok {
 			log.Printf("[MCache] hit key:%s\n", key)
 			return value, nil
@@ -47,6 +53,10 @@ func (c *Client) Get(key string) (ByteView, error) {
 		return ByteView{}, err
 	}
 	return value.(ByteView), err
+}
+
+func (c *Client) Update(key string) {
+	c.uMap[key] = struct{}{}
 }
 
 func (c *Client) getFromGetter(key string) (value ByteView, err error) {
