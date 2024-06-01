@@ -16,7 +16,7 @@ var db = map[string]string{
 
 func TestClient_Get(t *testing.T) {
 	loadCounts := make(map[string]int, len(db))
-	gee := New(2<<10, GetterFunc(
+	c := New(2<<10, GetterFunc(
 		func(key string) ([]byte, error) {
 			log.Println("[SlowDB] search key", key)
 			if v, ok := db[key]; ok {
@@ -30,15 +30,15 @@ func TestClient_Get(t *testing.T) {
 		}))
 
 	for k, v := range db {
-		if view, err := gee.Get(k); err != nil || view.String() != v {
+		if view, err := c.Get(k); err != nil || view.String() != v {
 			t.Fatal("failed to get value of Tom")
 		} // load from callback function
-		if _, err := gee.Get(k); err != nil || loadCounts[k] > 1 {
+		if _, err := c.Get(k); err != nil || loadCounts[k] > 1 {
 			t.Fatalf("cache %s miss", k)
 		} // cache hit
 	}
 
-	if view, err := gee.Get("unknown"); err == nil {
+	if view, err := c.Get("unknown"); err == nil {
 		t.Fatalf("the value of unknow should be empty, but %s got", view)
 	}
 }
@@ -64,5 +64,29 @@ func TestSingleFlight(t *testing.T) {
 
 	if cnt != 1 {
 		t.Fatalf("failed")
+	}
+}
+
+func TestClientUpdate(t *testing.T) {
+	loadCounts := make(map[string]int, len(db))
+	c := New(2<<10, GetterFunc(
+		func(key string) ([]byte, error) {
+			log.Println("[SlowDB] search key", key)
+			if v, ok := db[key]; ok {
+				if _, ok := loadCounts[key]; !ok {
+					loadCounts[key] = 0
+				}
+				loadCounts[key] += 1
+				return []byte(v), nil
+			}
+			return nil, fmt.Errorf("%s not exist", key)
+		}))
+
+	c.Get("Tom")
+	db["Tom"] = "114514"
+	c.Update("Tom")
+	data, err := c.Get("Tom")
+	if err != nil || data.String() != "114514" {
+		t.Fatalf("update cache data failed")
 	}
 }
