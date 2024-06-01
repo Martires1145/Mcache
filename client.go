@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/Martires1145/Mcache/singleflight"
 	"log"
+	"sync"
 )
 
 type Getter interface {
@@ -17,6 +18,7 @@ func (g GetterFunc) Get(key string) ([]byte, error) {
 }
 
 type Client struct {
+	mu        sync.Mutex
 	getter    Getter
 	mainCache cache
 	loader    *singleflight.Group
@@ -38,10 +40,13 @@ func (c *Client) Get(key string) (ByteView, error) {
 	}
 
 	value, err := c.loader.Do(key, func() (any, error) {
+		c.mu.Lock()
 		if _, ok := c.uMap[key]; ok {
 			delete(c.uMap, key)
+			c.mu.Unlock()
 			return c.getFromGetter(key)
 		}
+		c.mu.Unlock()
 		if value, ok := c.mainCache.get(key); ok {
 			log.Printf("[MCache] hit key:%s\n", key)
 			return value, nil
@@ -56,6 +61,8 @@ func (c *Client) Get(key string) (ByteView, error) {
 }
 
 func (c *Client) Update(key string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	c.uMap[key] = struct{}{}
 }
 
