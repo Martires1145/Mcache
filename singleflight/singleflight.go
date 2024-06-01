@@ -25,10 +25,16 @@ func (g *Group) Do(key string, f func() (any, error)) (any, error) {
 		return c.val, c.err
 	}
 
-	g.m[key] = &call{}
-	g.m[key].wg.Add(1)
-	g.m[key].val, g.m[key].err = f()
-	g.m[key].wg.Done()
+	c := new(call)
+	g.m[key] = c
+	g.mu.Unlock()
+
+	c.wg.Add(1)
+	c.val, c.err = f()
+	c.wg.Done()
+
+	g.mu.Lock()
+	delete(g.m, key)
 	g.mu.Unlock()
 	return g.m[key].val, g.m[key].err
 }
