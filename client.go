@@ -2,6 +2,7 @@ package Mcache
 
 import (
 	"fmt"
+	"github.com/Martires1145/Mcache/bloomfilter"
 	"github.com/Martires1145/Mcache/singleflight"
 	"log"
 	"sync"
@@ -20,6 +21,7 @@ func (g GetterFunc) Get(key string) ([]byte, error) {
 type Client struct {
 	mu        sync.Mutex
 	getter    Getter
+	filter    *bloomfilter.BloomFilter
 	mainCache cache
 	loader    *singleflight.Group
 	uMap      map[string]any
@@ -28,6 +30,7 @@ type Client struct {
 func New(maxBytes int64, getter Getter) *Client {
 	return &Client{
 		getter:    getter,
+		filter:    bloomfilter.New(10000000, 10),
 		mainCache: cache{cacheBytes: maxBytes},
 		loader:    &singleflight.Group{},
 		uMap:      make(map[string]any),
@@ -35,6 +38,10 @@ func New(maxBytes int64, getter Getter) *Client {
 }
 
 func (c *Client) Get(key string) (ByteView, error) {
+	if !c.filter.MightContain(key) {
+		return ByteView{}, fmt.Errorf("no such data")
+	}
+
 	if key == "" {
 		return ByteView{}, fmt.Errorf("empty key")
 	}
@@ -78,5 +85,6 @@ func (c *Client) getFromGetter(key string) (value ByteView, err error) {
 }
 
 func (c *Client) loadNewCache(key string, value ByteView) {
+	c.filter.Add(key)
 	c.mainCache.add(key, value)
 }
